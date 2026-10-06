@@ -3,9 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>DC Hero Database</title>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    
+
+    <header>
+        <h1>DC HERO DATABASE</h1>
+        <p>Base de datos de superhéroes de DC</p>
+    </header>
+
+
+    <main>
+
+        <!-- Resumen -->
+        <section class="resumen">
+
+            <h2>Resumen</h2>
+
+            <div class="estadisticas">
+
+                <div>
+                    <span>Héroes</span>
+                    <strong id="total-heroes">0</strong>
+                </div>
+
+                <div>
+                    <span>Poder medio</span>
+                    <strong id="poder-medio">0.0</strong>
+                </div>
+
+                <div>
+                    <span>Más poderoso</span>
+                    <strong id="heroe-mas-poderoso">-</strong>
+                </div>
+
+                <div>
+                    <span>Tipo dominante</span>
+                    <strong id="tipo-dominante">-</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Controles -->
+        <section class="controles">
+
+            <div class="busqueda">
+                <label for="buscador">Buscar héroe</label>
+
+                <input
+                    type="search"
+                    id="buscador"
+                    placeholder="Ej: Batman"
+                    autocomplete="off"
+                >
+            </div>
+
+
+            <div>
+                <label for="filtro-tipo">Tipo de poder</label>
+
+                <select id="filtro-tipo">
+                    <option value="todos">Todos</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label for="orden-poder">Ordenar</label>
+
+                <select id="orden-poder">
+
+                    <option value="poder-desc">
+                        Poder: mayor a menor
+                    </option>
+
+                    <option value="poder-asc">
+                        Poder: menor a mayor
+                    </option>
+
+                    <option value="nombre-asc">
+                        Nombre: A-Z
+                    </option>
+
+                    <option value="nombre-desc">
+                        Nombre: Z-A
+                    </option>
+
+                </select>
+            </div>
+
+        </section>
+
+
+        <!-- Estados -->
+        <section id="estado-aplicacion">
+
+            <div
+                id="estado-cargando"
+                class="estado"
+            >
+                <p>Cargando héroes...</p>
+            </div>
+
+
+            <div
+                id="estado-error"
+                class="estado error oculto"
+            >
+                <h2>Error</h2>
+
+                <p id="mensaje-error">
+                    No se han podido cargar los datos.
+                </p>
+
+                <button
+                    type="button"
+                    id="boton-reintentar"
+                >
+                    Reintentar
+                </button>
+            </div>
+
+
+            <div
+                id="estado-vacio"
+                class="estado oculto"
+            >
+                <p>No se han encontrado héroes.</p>
+            </div>
+
+        </section>
+
+
+        <!-- Resultados -->
+        <section class="resultados">
+
+            <div class="resultados-cabecera">
+                <h2>Héroes</h2>
+
+                <span id="contador-resultados">
+                    0 resultados
+                </span>
+            </div>
+
+
+            <div
+                id="grid-heroes"
+                class="grid-heroes"
+            >
+                <!-- Las tarjetas se generan con JavaScript -->
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>DC Hero Database · API pública de superhéroes</p>
+    </footer>
+
+
+    <script type="module" src="/src/main.js"></script>
+
 </body>
 </html>
+
+
