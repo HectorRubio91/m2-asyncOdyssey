@@ -11,44 +11,44 @@ const HEROES_DC = [
     { idApi: 38, nombre: "Aquaman" },
     { idApi: 156, nombre: "Shazam" },
 
-    { idApi: 568, nombre: "Red Tornado" },
-    { idApi: 307, nombre: "Hawkman" },
-    { idApi: 298, nombre: "Hawkgirl" },
-    { idApi: 238, nombre: "Firestorm" },
+    { idApi: 551, nombre: "Red Tornado" },
+    { idApi: 298, nombre: "Green Arrow" },
+    { idApi: 315, nombre: "Hawkgirl" },
+    { idApi: 261, nombre: "Firestorm" },
 
-    { idApi: 487, nombre: "Nightwing" },
+    { idApi: 491, nombre: "Nightwing" },
     { idApi: 63, nombre: "Batgirl" },
-    { idApi: 595, nombre: "Robin" },
-    { idApi: 558, nombre: "Red Hood" },
-    { idApi: 495, nombre: "Red Robin" },
+    { idApi: 561, nombre: "Robin" },
+    { idApi: 546, nombre: "Red Hood" },
+    { idApi: 549, nombre: "Red Robin" },
+    { idApi: 334, nombre: "Huntress" },
 
-    { idApi: 687, nombre: "The Atom" },
-    { idApi: 87, nombre: "Booster Gold" },
-    { idApi: 88, nombre: "Blue Beetle" },
-    { idApi: 720, nombre: "Zatanna" },
-    { idApi: 196, nombre: "Doctor Fate" },
+    { idApi: 126, nombre: "Blue Beetle" },
+    { idApi: 233, nombre: "Dr Manhattan" },
+    { idApi: 730, nombre: "Zatanna" },
+    { idApi: 224, nombre: "Doctor Fate" },
+    { idApi: 367, nombre: "John Constantine" },
 
-    { idApi: 17, nombre: "Arsenal" },
-    { idApi: 596, nombre: "Starfire" },
-    { idApi: 550, nombre: "Raven" },
-    { idApi: 62, nombre: "Beast Boy" },
-    { idApi: 401, nombre: "Kid Flash" },
+    { idApi: 632, nombre: "Starfire" },
+    { idApi: 542, nombre: "Raven" },
+    { idApi: 76, nombre: "Beast Boy" },
+    { idApi: 37, nombre: "Aqualad" },
+    { idApi: 455, nombre: "Miss Martian" },
+    { idApi: 384, nombre: "Kid Flash" },
 
-    { idApi: 644, nombre: "Superboy" },
-    { idApi: 666, nombre: "Supergirl" },
-    { idApi: 687, nombre: "Steel" },
-    { idApi: 540, nombre: "Power Girl" },
-    { idApi: 313, nombre: "Krypto" },
+    { idApi: 641, nombre: "Superboy" },
+    { idApi: 643, nombre: "Supergirl" },
+    { idApi: 635, nombre: "Steel" },
+    { idApi: 524, nombre: "Power Girl" },
+    { idApi: 396, nombre: "Krypto" },
 
-    { idApi: 423, nombre: "Mr. Terrific" },
-    { idApi: 316, nombre: "Jay Garrick" },
-    { idApi: 20, nombre: "Atom Smasher" },
-    { idApi: 717, nombre: "Wildcat" },
-    { idApi: 646, nombre: "Stargirl" },
-
-    { idApi: 306, nombre: "Guy Gardner" },
-    { idApi: 358, nombre: "John Stewart" },
-    { idApi: 358, nombre: "Kyle Rayner" }
+    { idApi: 263, nombre: "Jay Garrick" },
+    { idApi: 633, nombre: "Stargirl" },
+    { idApi: 520, nombre: "Plastic Man" },
+    
+    { idApi: 305, nombre: "Guy Gardner" },
+    { idApi: 397, nombre: "Kyle Rayner" },
+    { idApi: 388, nombre: "Kilowog" }
 
 ];
 
@@ -60,6 +60,12 @@ export function prepararHeroes(datos) {
 
             const hero = datos.find(
                 hero => hero.id === personaje.idApi
+            );
+
+            console.log(
+                personaje.nombre,
+                personaje.idApi,
+                hero
             );
 
             if (!hero) {
