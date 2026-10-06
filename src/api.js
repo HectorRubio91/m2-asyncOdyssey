@@ -10,37 +10,39 @@ export async function obtenerHeroes() {
 
     if (cache) {
 
-        const datos = JSON.parse(cache);
+        try {
 
-        if (Date.now() - datos.fecha < CACHE_TIME) {
-            return datos.heroes;
+            const datos = JSON.parse(cache);
+
+            if (
+                datos.fecha &&
+                Date.now() - datos.fecha < CACHE_TIME
+            ) {
+                return datos.heroes;
+            }
+
+        } catch {
+            localStorage.removeItem(CACHE_KEY);
         }
     }
 
-    try {
+    const respuesta = await fetch(API_URL);
 
-        const respuesta = await fetch(API_URL);
-
-        if (!respuesta.ok) {
-            throw new Error("Error al conectar con la API");
-        }
-
-        const heroes = await respuesta.json();
-
-        localStorage.setItem(
-            CACHE_KEY,
-            JSON.stringify({
-                fecha: Date.now(),
-                heroes
-            })
-        );
-
-        return heroes;
-
-    } catch (error) {
-
+    if (!respuesta.ok) {
         throw new Error(
-            "No se han podido cargar los héroes"
+            "No se han podido cargar los datos de la API."
         );
     }
+
+    const heroes = await respuesta.json();
+
+    localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({
+            fecha: Date.now(),
+            heroes
+        })
+    );
+
+    return heroes;
 }

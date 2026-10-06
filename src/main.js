@@ -37,6 +37,8 @@ async function iniciar() {
 
     cargando.classList.remove("oculto");
 
+    error.classList.add("oculto");
+
     try {
 
         const datos = await obtenerHeroes();
@@ -64,10 +66,14 @@ async function iniciar() {
 
 function cargarTipos() {
 
+    filtroTipo.innerHTML = `
+        <option value="todos">
+            Todos
+        </option>
+    `;
+
     const tipos = heroes
-
         .map(hero => hero.tipo)
-
         .filter(
             (tipo, index, array) =>
                 array.indexOf(tipo) === index
@@ -100,9 +106,7 @@ function mostrarHeroes() {
         orden.value
     );
 
-
     grid.innerHTML = "";
-
 
     resultado.forEach(hero => {
 
@@ -112,13 +116,14 @@ function mostrarHeroes() {
         tarjeta.className =
             "tarjeta-heroe";
 
-
         tarjeta.innerHTML = `
             <div class="tarjeta-imagen">
+
                 <img
                     src="${hero.imagen}"
                     alt="${hero.nombre}"
                 >
+
             </div>
 
             <div class="tarjeta-contenido">
@@ -138,6 +143,7 @@ function mostrarHeroes() {
                 <div class="tarjeta-datos">
 
                     <div class="dato">
+
                         <span class="dato-etiqueta">
                             Altura
                         </span>
@@ -145,9 +151,11 @@ function mostrarHeroes() {
                         <span class="dato-valor">
                             ${hero.altura}
                         </span>
+
                     </div>
 
                     <div class="dato">
+
                         <span class="dato-etiqueta">
                             Peso
                         </span>
@@ -155,6 +163,7 @@ function mostrarHeroes() {
                         <span class="dato-valor">
                             ${hero.peso}
                         </span>
+
                     </div>
 
                 </div>
@@ -162,7 +171,7 @@ function mostrarHeroes() {
                 <div class="tarjeta-poderes">
 
                     <span class="tarjeta-poderes-titulo">
-                        Poderes
+                        Estadísticas
                     </span>
 
                     <ul class="lista-poderes">
@@ -215,7 +224,8 @@ function actualizarResumen(heroes) {
 
     document.getElementById(
         "total-heroes"
-    ).textContent = heroes.length;
+    ).textContent =
+        heroes.length;
 
     document.getElementById(
         "poder-medio"
@@ -239,15 +249,18 @@ buscador.addEventListener(
     mostrarHeroes
 );
 
+
 filtroTipo.addEventListener(
     "change",
     mostrarHeroes
 );
 
+
 orden.addEventListener(
     "change",
     mostrarHeroes
 );
+
 
 document.getElementById(
     "boton-reintentar"

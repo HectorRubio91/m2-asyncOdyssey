@@ -1,75 +1,84 @@
 const HEROES_DC = [
-    "Superman",
-    "Batman",
-    "Wonder Woman",
-    "Green Lantern",
-    "Flash",
-    "Flash II",
-    "Martian Manhunter",
-    "Cyborg",
-    "Black Canary",
-    "Aquaman",
-    "Shazam",
-    "Red Tornado",
-    "Hawkman",
-    "Hawkgirl",
-    "Firestorm",
-    "Nightwing",
-    "Batgirl",
-    "Robin",
-    "Red Hood",
-    "Red Robin",
-    "The Atom",
-    "Booster Gold",
-    "Blue Beetle",
-    "Zatanna",
-    "Doctor Fate",
-    "Arsenal",
-    "Starfire",
-    "Raven",
-    "Beast Boy",
-    "Kid Flash",
-    "Superboy",
-    "Supergirl",
-    "Steel",
-    "Power Girl",
-    "Krypto",
-    "Mr. Terrific",
-    "Jay Garrick",
-    "Atom Smasher",
-    "Wildcat",
-    "Stargirl",
-    "Guy Gardner",
-    "John Stewart",
-    "Kyle Rayner"
+
+    { idApi: 644, nombre: "Superman" },
+    { idApi: 70, nombre: "Batman" },
+    { idApi: 720, nombre: "Wonder Woman" },
+    { idApi: 306, nombre: "Green Lantern" },
+    { idApi: 265, nombre: "The Flash" },
+    { idApi: 432, nombre: "Martian Manhunter" },
+    { idApi: 194, nombre: "Cyborg" },
+    { idApi: 97, nombre: "Black Canary" },
+    { idApi: 38, nombre: "Aquaman" },
+    { idApi: 156, nombre: "Shazam" },
+
+    { idApi: 568, nombre: "Red Tornado" },
+    { idApi: 307, nombre: "Hawkman" },
+    { idApi: 298, nombre: "Hawkgirl" },
+    { idApi: 238, nombre: "Firestorm" },
+
+    { idApi: 487, nombre: "Nightwing" },
+    { idApi: 63, nombre: "Batgirl" },
+    { idApi: 595, nombre: "Robin" },
+    { idApi: 558, nombre: "Red Hood" },
+    { idApi: 495, nombre: "Red Robin" },
+
+    { idApi: 687, nombre: "The Atom" },
+    { idApi: 87, nombre: "Booster Gold" },
+    { idApi: 88, nombre: "Blue Beetle" },
+    { idApi: 720, nombre: "Zatanna" },
+    { idApi: 196, nombre: "Doctor Fate" },
+
+    { idApi: 17, nombre: "Arsenal" },
+    { idApi: 596, nombre: "Starfire" },
+    { idApi: 550, nombre: "Raven" },
+    { idApi: 62, nombre: "Beast Boy" },
+    { idApi: 401, nombre: "Kid Flash" },
+
+    { idApi: 644, nombre: "Superboy" },
+    { idApi: 666, nombre: "Supergirl" },
+    { idApi: 687, nombre: "Steel" },
+    { idApi: 540, nombre: "Power Girl" },
+    { idApi: 313, nombre: "Krypto" },
+
+    { idApi: 423, nombre: "Mr. Terrific" },
+    { idApi: 316, nombre: "Jay Garrick" },
+    { idApi: 20, nombre: "Atom Smasher" },
+    { idApi: 717, nombre: "Wildcat" },
+    { idApi: 646, nombre: "Stargirl" },
+
+    { idApi: 306, nombre: "Guy Gardner" },
+    { idApi: 358, nombre: "John Stewart" },
+    { idApi: 358, nombre: "Kyle Rayner" }
+
 ];
+
 
 export function prepararHeroes(datos) {
 
-    return datos
+    return HEROES_DC
+        .map((personaje, indice) => {
 
-        .filter(hero =>
-            HEROES_DC.includes(hero.name)
-        )
-
-        .map(hero => {
-
-            const stats = Object.values(hero.powerstats)
-                .map(Number);
-
-            const total = stats.reduce(
-                (suma, valor) => suma + valor,
-                0
+            const hero = datos.find(
+                hero => hero.id === personaje.idApi
             );
 
+            if (!hero) {
+                return null;
+            }
+
             return {
-                nombre: hero.name,
+
+                id: indice + 1,
+
+                idApi: personaje.idApi,
+
+                nombre: personaje.nombre,
 
                 imagen: hero.images.md,
 
                 poderes: Object.keys(hero.powerstats),
 
-                tipo: obtenerTipo(hero),
+                tipo: obtenerTipo(personaje.nombre),
 
                 altura: hero.appearance.height[1],
 
@@ -79,81 +88,100 @@ export function prepararHeroes(datos) {
                     hero.biography.fullName ||
                     "Sin información",
 
-                poder: Math.max(
-                    1,
-                    Math.ceil(total / 60)
-                )
+                poder: calcularPoder(hero)
+
             };
-        });
+        })
+        .filter(hero => hero !== null);
 }
 
-function obtenerTipo(hero) {
 
-    const nombre =
-        hero.name.toLowerCase();
+function calcularPoder(hero) {
+
+    const stats = Object.values(hero.powerstats)
+        .map(valor => Number(valor) || 0);
+
+    const total = stats.reduce(
+        (suma, valor) => suma + valor,
+        0
+    );
+
+    return Math.min(
+        10,
+        Math.max(
+            1,
+            Math.ceil(total / 60)
+        )
+    );
+}
+
+
+function obtenerTipo(nombre) {
+
+    const nombreMinusculas =
+        nombre.toLowerCase();
 
     if (
-        nombre.includes("lantern") ||
-        nombre.includes("gardner") ||
-        nombre.includes("stewart") ||
-        nombre.includes("rayner")
+        nombreMinusculas.includes("lantern") ||
+        nombreMinusculas.includes("gardner") ||
+        nombreMinusculas.includes("stewart") ||
+        nombreMinusculas.includes("rayner")
     ) {
         return "Linterna";
     }
 
     if (
-        nombre.includes("flash")
+        nombreMinusculas.includes("flash")
     ) {
         return "Velocista";
     }
 
     if (
-        nombre.includes("superman") ||
-        nombre.includes("supergirl") ||
-        nombre.includes("superboy") ||
-        nombre.includes("krypto") ||
-        nombre.includes("power girl")
+        nombreMinusculas.includes("superman") ||
+        nombreMinusculas.includes("supergirl") ||
+        nombreMinusculas.includes("superboy") ||
+        nombreMinusculas.includes("krypto") ||
+        nombreMinusculas.includes("power girl")
     ) {
         return "Kryptoniano";
     }
 
     if (
-        nombre.includes("batman") ||
-        nombre.includes("batgirl") ||
-        nombre.includes("robin") ||
-        nombre.includes("nightwing") ||
-        nombre.includes("red hood") ||
-        nombre.includes("red robin")
+        nombreMinusculas.includes("batman") ||
+        nombreMinusculas.includes("batgirl") ||
+        nombreMinusculas.includes("robin") ||
+        nombreMinusculas.includes("nightwing") ||
+        nombreMinusculas.includes("red hood")
     ) {
         return "Humano";
     }
 
     if (
-        nombre.includes("wonder woman")
+        nombreMinusculas.includes("wonder woman")
     ) {
         return "Amazona";
     }
 
     if (
-        nombre.includes("aquaman")
+        nombreMinusculas.includes("aquaman")
     ) {
         return "Atlante";
     }
 
     if (
-        nombre.includes("zatanna") ||
-        nombre.includes("fate") ||
-        nombre.includes("raven") ||
-        nombre.includes("shazam")
+        nombreMinusculas.includes("zatanna") ||
+        nombreMinusculas.includes("fate") ||
+        nombreMinusculas.includes("raven") ||
+        nombreMinusculas.includes("shazam")
     ) {
         return "Mágico";
     }
 
     if (
-        nombre.includes("cyborg") ||
-        nombre.includes("steel") ||
-        nombre.includes("beetle") ||
-        nombre.includes("mr. terrific")
+        nombreMinusculas.includes("cyborg") ||
+        nombreMinusculas.includes("steel") ||
+        nombreMinusculas.includes("beetle") ||
+        nombreMinusculas.includes("mr. terrific")
     ) {
         return "Tecnológico";
     }
@@ -161,7 +189,12 @@ function obtenerTipo(hero) {
     return "Metahumano";
 }
 
-export function filtrarHeroes(heroes, busqueda, tipo) {
+
+export function filtrarHeroes(
+    heroes,
+    busqueda,
+    tipo
+) {
 
     return heroes.filter(hero => {
 
@@ -179,6 +212,7 @@ export function filtrarHeroes(heroes, busqueda, tipo) {
         return coincideNombre && coincideTipo;
     });
 }
+
 
 export function ordenarHeroes(
     heroes,
@@ -215,9 +249,11 @@ export function ordenarHeroes(
     );
 }
 
+
 export function calcularResumen(heroes) {
 
     if (heroes.length === 0) {
+
         return {
             media: 0,
             masPoderoso: "-",
@@ -251,7 +287,9 @@ export function calcularResumen(heroes) {
 
     const tipoDominante =
         Object.entries(tipos)
-            .sort((a, b) => b[1] - a[1])[0][0];
+            .sort(
+                (a, b) => b[1] - a[1]
+            )[0][0];
 
     return {
         media: suma / heroes.length,
