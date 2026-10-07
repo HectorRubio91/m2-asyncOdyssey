@@ -1,57 +1,56 @@
 const HEROES_DC = [
 
-    { idApi: 644, nombre: "Superman" },
-    { idApi: 70, nombre: "Batman" },
-    { idApi: 720, nombre: "Wonder Woman" },
-    { idApi: 306, nombre: "Green Lantern" },
-    { idApi: 265, nombre: "The Flash" },
-    { idApi: 432, nombre: "Martian Manhunter" },
-    { idApi: 194, nombre: "Cyborg" },
-    { idApi: 97, nombre: "Black Canary" },
-    { idApi: 38, nombre: "Aquaman" },
-    { idApi: 156, nombre: "Shazam" },
+    { idApi: 644, nombre: "Superman", tipo: "Kryptoniano" },
+    { idApi: 70, nombre: "Batman", tipo: "Humano" },
+    { idApi: 720, nombre: "Wonder Woman", tipo: "Amazona" },
+    { idApi: 306, nombre: "Green Lantern", tipo: "Linterna" },
+    { idApi: 265, nombre: "The Flash", tipo: "Velocista" },
+    { idApi: 432, nombre: "Martian Manhunter", tipo: "Marciano" },
+    { idApi: 194, nombre: "Cyborg", tipo: "Tecnologico" },
+    { idApi: 97, nombre: "Black Canary", tipo: "Metahumano" },
+    { idApi: 38, nombre: "Aquaman", tipo: "Atlante" },
+    { idApi: 156, nombre: "Shazam", tipo: "Magico" },
 
-    { idApi: 551, nombre: "Red Tornado" },
-    { idApi: 298, nombre: "Green Arrow" },
-    { idApi: 315, nombre: "Hawkgirl" },
-    { idApi: 261, nombre: "Firestorm" },
+    { idApi: 551, nombre: "Red Tornado", tipo: "Tecnologico" },
+    { idApi: 298, nombre: "Green Arrow", tipo: "Humano" },
+    { idApi: 315, nombre: "Hawkgirl", tipo: "Thanagariana" },
+    { idApi: 261, nombre: "Firestorm", tipo: "Tecnologico" },
 
-    { idApi: 491, nombre: "Nightwing" },
-    { idApi: 63, nombre: "Batgirl" },
-    { idApi: 561, nombre: "Robin" },
-    { idApi: 546, nombre: "Red Hood" },
-    { idApi: 549, nombre: "Red Robin" },
-    { idApi: 334, nombre: "Huntress" },
+    { idApi: 491, nombre: "Nightwing", tipo: "Humano" },
+    { idApi: 63, nombre: "Batgirl", tipo: "Humano" },
+    { idApi: 561, nombre: "Robin", tipo: "Humano" },
+    { idApi: 546, nombre: "Red Hood", tipo: "Humano" },
+    { idApi: 549, nombre: "Red Robin", tipo: "Humano" },
+    { idApi: 334, nombre: "Huntress", tipo: "Humano" },
 
-    { idApi: 126, nombre: "Blue Beetle" },
-    { idApi: 233, nombre: "Dr Manhattan" },
-    { idApi: 730, nombre: "Zatanna" },
-    { idApi: 224, nombre: "Doctor Fate" },
-    { idApi: 367, nombre: "John Constantine" },
+    { idApi: 126, nombre: "Blue Beetle", tipo: "Tecnologico" },
+    { idApi: 233, nombre: "Dr Manhattan", tipo: "" },
+    { idApi: 730, nombre: "Zatanna", tipo: "Magico" },
+    { idApi: 224, nombre: "Doctor Fate", tipo: "Magico" },
+    { idApi: 367, nombre: "John Constantine", tipo: "Magico" },
 
-    { idApi: 632, nombre: "Starfire" },
-    { idApi: 542, nombre: "Raven" },
-    { idApi: 76, nombre: "Beast Boy" },
-    { idApi: 37, nombre: "Aqualad" },
-    { idApi: 455, nombre: "Miss Martian" },
-    { idApi: 384, nombre: "Kid Flash" },
+    { idApi: 632, nombre: "Starfire", tipo: "Tamarana" },
+    { idApi: 542, nombre: "Raven", tipo: "Magico" },
+    { idApi: 76, nombre: "Beast Boy", tipo: "Metahumano" },
+    { idApi: 37, nombre: "Aqualad", tipo: "Atlante" },
+    { idApi: 455, nombre: "Miss Martian", tipo: "Marciano" },
+    { idApi: 384, nombre: "Kid Flash", tipo: "Velocista" },
 
-    { idApi: 641, nombre: "Superboy" },
-    { idApi: 643, nombre: "Supergirl" },
-    { idApi: 635, nombre: "Steel" },
-    { idApi: 524, nombre: "Power Girl" },
-    { idApi: 396, nombre: "Krypto" },
+    { idApi: 641, nombre: "Superboy", tipo: "Kryptoniano" },
+    { idApi: 643, nombre: "Supergirl", tipo: "Kryptoniano" },
+    { idApi: 635, nombre: "Steel", tipo: "Tecnologico" },
+    { idApi: 524, nombre: "Power Girl", tipo: "Kryptoniano" },
+    { idApi: 396, nombre: "Krypto", tipo: "Kryptoniano" },
 
-    { idApi: 263, nombre: "Jay Garrick" },
-    { idApi: 633, nombre: "Stargirl" },
-    { idApi: 520, nombre: "Plastic Man" },
-    
-    { idApi: 305, nombre: "Guy Gardner" },
-    { idApi: 397, nombre: "Kyle Rayner" },
-    { idApi: 388, nombre: "Kilowog" }
+    { idApi: 263, nombre: "Jay Garrick", tipo: "Velocista" },
+    { idApi: 633, nombre: "Stargirl", tipo: "Tecnologico" },
+    { idApi: 520, nombre: "Plastic Man", tipo: "Metahumano" },
+
+    { idApi: 305, nombre: "Guy Gardner", tipo: "Linterna" },
+    { idApi: 397, nombre: "Kyle Rayner", tipo: "Linterna" },
+    { idApi: 388, nombre: "Kilowog", tipo: "Linterna" }
 
 ];
-
 
 export function prepararHeroes(datos) {
 
@@ -84,7 +83,7 @@ export function prepararHeroes(datos) {
 
                 poderes: Object.keys(hero.powerstats),
 
-                tipo: obtenerTipo(personaje.nombre),
+                tipo: personaje.tipo,
 
                 altura: hero.appearance.height[1],
 
@@ -119,80 +118,6 @@ function calcularPoder(hero) {
             Math.ceil(total / 60)
         )
     );
-}
-
-
-function obtenerTipo(nombre) {
-
-    const nombreMinusculas =
-        nombre.toLowerCase();
-
-    if (
-        nombreMinusculas.includes("lantern") ||
-        nombreMinusculas.includes("gardner") ||
-        nombreMinusculas.includes("stewart") ||
-        nombreMinusculas.includes("rayner")
-    ) {
-        return "Linterna";
-    }
-
-    if (
-        nombreMinusculas.includes("flash")
-    ) {
-        return "Velocista";
-    }
-
-    if (
-        nombreMinusculas.includes("superman") ||
-        nombreMinusculas.includes("supergirl") ||
-        nombreMinusculas.includes("superboy") ||
-        nombreMinusculas.includes("krypto") ||
-        nombreMinusculas.includes("power girl")
-    ) {
-        return "Kryptoniano";
-    }
-
-    if (
-        nombreMinusculas.includes("batman") ||
-        nombreMinusculas.includes("batgirl") ||
-        nombreMinusculas.includes("robin") ||
-        nombreMinusculas.includes("nightwing") ||
-        nombreMinusculas.includes("red hood")
-    ) {
-        return "Humano";
-    }
-
-    if (
-        nombreMinusculas.includes("wonder woman")
-    ) {
-        return "Amazona";
-    }
-
-    if (
-        nombreMinusculas.includes("aquaman")
-    ) {
-        return "Atlante";
-    }
-
-    if (
-        nombreMinusculas.includes("zatanna") ||
-        nombreMinusculas.includes("fate") ||
-        nombreMinusculas.includes("raven") ||
-        nombreMinusculas.includes("shazam")
-    ) {
-        return "Mágico";
-    }
-
-    if (
-        nombreMinusculas.includes("cyborg") ||
-        nombreMinusculas.includes("steel") ||
-        nombreMinusculas.includes("beetle") ||
-        nombreMinusculas.includes("mr. terrific")
-    ) {
-        return "Tecnológico";
-    }
-
-    return "Metahumano";
 }
 
 
