@@ -1,6 +1,5 @@
-
-
 MISION M2 - Async Odyssey - Web Development I
+=============================================
 
 ## Como probarlo
 
@@ -11,4 +10,13 @@ Te enseña el nombre del superheroe, su imagen, cuanto poder tiene en una escala
 
 ## Uso de IA
 
+He usado la IA de la misma forma que la anterior practica: usando un prompt principal con ChatGPT y Claude y comparando las respuestas para elegir la que mas me convenga, aunque en este caso solo he usado la IA para la parte nueva sobre la practica.
+Mi javaScript tiene 3 archivos: api.js que se encarga de conectar con la API que uso, hacer busquedas y la cache, la cache dura 24h y permite que no este todo el rato conectando con la API para hacer busquedas sobre el contenido; logic.js se encarga de los calculos y operaciones que hago sobre los datos de la API; y main.js que se encarga del javaScript normal de la pagina web como es el buscado o los desplegables y conectar todas las partes, esto lo hago yo y no he usado la IA para ello.
+Ejemplo de prompt real:
+
 ## Autopsia
+
+-
+
+-
+
