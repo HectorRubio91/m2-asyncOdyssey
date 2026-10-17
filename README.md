@@ -14,6 +14,32 @@ He usado la IA de la misma forma que la anterior practica: usando un prompt prin
 Mi javaScript tiene 3 archivos: api.js que se encarga de conectar con la API que uso, hacer busquedas y la cache, la cache dura 24h y permite que no este todo el rato conectando con la API para hacer busquedas sobre el contenido; logic.js se encarga de los calculos y operaciones que hago sobre los datos de la API; y main.js que se encarga del javaScript normal de la pagina web como es el buscado o los desplegables y conectar todas las partes, esto lo hago yo y no he usado la IA para ello.
 Ejemplo de prompt real:
 
+Quiero que desarrolles el JavaScript de una página web llamada DC Hero Database, una base de datos de superhéroes de DC donde se puedan consultar personajes, buscar por nombre, filtrar por tipo y ordenar por nivel de poder.
+
+La página debe consumir una API pública real, concretamente https://akabab.github.io/superhero-api/api/all.json, y mostrar información de los personajes, como su nombre, imagen, estadísticas y nivel de poder.
+
+La práctica tiene como lema «El event loop no espera a nadie» y debe cumplir estos requisitos:
+
+Utilizar fetch, async/await y manejo de errores con try/catch y response.ok.
+
+Utilizar map, filter y reduce para transformar y procesar los datos.
+
+Organizar el código mediante módulos ES, separando la petición a la API, la lógica de los datos y la interacción con el DOM.
+
+Mostrar estados de carga, error y ausencia de resultados.
+
+Evitar que la aplicación falle si la API devuelve datos incompletos o se produce un error.
+
+Añadir una caché con localStorage como funcionalidad adicional.
+
+Utilizar JavaScript puro, sin frameworks ni librerías externas.
+
+El proyecto debe funcionar con Vite y tener una estructura clara, un package.json coherente y código fácil de entender y defender en un examen.
+
+Quiero que generes el JavaScript necesario para implementar la aplicación, expliques brevemente la responsabilidad de cada archivo y compruebes que los módulos funcionan correctamente entre sí, dando ejemplos donde se podría hacer de otras alternativas.
+
+No quiero una solución innecesariamente compleja: prioriza un código claro, funcional y que cumpla la rúbrica de la práctica.
+
 ## Autopsia
 
 -
