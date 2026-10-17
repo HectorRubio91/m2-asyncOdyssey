@@ -42,7 +42,7 @@ No quiero una solución innecesariamente compleja: prioriza un código claro, fu
 
 ## Autopsia
 
--
+- El primer problema que me encontré al trabajar con la API y hacer la página web fue el como asignar el ID interno de cada héroe de la web, aunque parezca algo sencillo. ChatGPT me dijo de utilizar el ID de la API, que aunque significaria que no tendria dos variables diferentes de ID, tambien significa que los identificadores pueden tener números muy separados y no ser consecutivos ya que no cojo todos los personajes que tiene la API, solo unos heroes especificos; mientras que la opcion que me dio Claude fue el generar un ID que fuese la posicion de llegada de los personajes, que el primer personaje del array fuese el #1, el segundo el #2... Esto es mas sencillo y garantiza que los IDs sean consecutivos pero tiene el problema de que ahora hay 2 variables y depende del orden de los personajes, si cambio al principio del programa el orden del array al superheroe #1, ya no seria el #1 y puede ser un ligero problema. Terminé escogiendo la opcion de Claude ya que preferia que el ID interno del programa no fuese el mismo que el de la API. 
 
 -
 
