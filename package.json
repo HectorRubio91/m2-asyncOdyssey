@@ -1,0 +1,27 @@
+{
+  "name": "m2-asyncodyssey",
+  "version": "1.0.0",
+  "description": "MISION M2 - Async Odyssey - Web Development I\r =============================================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HectorRubio91/m2-asyncOdyssey.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/HectorRubio91/m2-asyncOdyssey/issues"
+  },
+  "homepage": "https://github.com/HectorRubio91/m2-asyncOdyssey#readme",
+  "devDependencies": {
+    "vite": "^8.3.4"
+  }
+}
