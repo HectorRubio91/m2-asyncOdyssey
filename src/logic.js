@@ -54,18 +54,12 @@ const HEROES_DC = [
 
 export function prepararHeroes(datos) {
 
+    const heroesPorId = new Map(datos.map(hero=> [hero.id, hero]));
+
     return HEROES_DC
         .map((personaje, indice) => {
 
-            const hero = datos.find(
-                hero => hero.id === personaje.idApi
-            );
-
-            console.log(
-                personaje.nombre,
-                personaje.idApi,
-                hero
-            );
+            const hero = heroesPorId.get(personaje.idApi);
 
             if (!hero) {
                 return null;
@@ -79,18 +73,18 @@ export function prepararHeroes(datos) {
 
                 nombre: personaje.nombre,
 
-                imagen: hero.images.md,
+                imagen: hero.images?.md || "",
 
-                poderes: Object.keys(hero.powerstats),
+                poderes: Object.keys(hero.powerstats || {}),
 
                 tipo: personaje.tipo,
 
-                altura: hero.appearance.height[1],
+                altura: hero.appearance?.height?.[1] || "Desconocida",
 
-                peso: hero.appearance.weight[1],
+                peso: hero.appearance?.weight?.[1] || "Desconocido",
 
                 historia:
-                    hero.biography.fullName ||
+                    hero.biography?.fullName ||
                     "Sin información",
 
                 poder: calcularPoder(hero)
