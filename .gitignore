@@ -1,0 +1,21 @@
+# Dependencias de Node.js y Vite
+node_modules/
+
+# Archivos generados por Vite
+dist/
+dist-ssr/
+
+# Archivos de entorno con posibles datos privados
+.env
+.env.*
+
+# Excepciones para variables públicas
+!.env.example
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de los editores
+.vscode/
+.idea/
