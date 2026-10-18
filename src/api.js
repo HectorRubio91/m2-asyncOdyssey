@@ -16,7 +16,10 @@ export async function obtenerHeroes() {
 
             const cache = JSON.parse(contenido);
 
-            if(Array.isArray(cache.heroes) && typeof cache.fecha === "number"){
+            if(Array.isArray(cache.heroes) && 
+                typeof cache.fecha === "number" &&
+                Number.isFinite(cache.fecha) &&
+                cache.fecha > 0){
 
                 cacheValida = cache;
 
@@ -26,11 +29,14 @@ export async function obtenerHeroes() {
 
                     return cache.heroes;
                 }
+            } else {
+
+                console.warn("La cache no tiene un formato valido.");
             }
         }
-    } catch{
+    } catch(error){
 
-
+        console.warn("No se ha podido leer la cache:", error);
     }
 
     try{
@@ -39,7 +45,7 @@ export async function obtenerHeroes() {
 
         if(!respuesta.ok){
 
-            throw new Error('Error HTTP: ${respuesta.status}');
+            throw new Error(`Error HTTP: ${respuesta.status}`);
         }
 
         const heroes = await respuesta.json();
@@ -58,8 +64,9 @@ export async function obtenerHeroes() {
                     heroes
                 })
             );
-        } catch {
+        } catch(error) {
 
+            console.warn("No se ha podido guardar la cache:", error);
 
         }
 
@@ -67,6 +74,8 @@ export async function obtenerHeroes() {
     } catch(error){
 
         if(cacheValida){
+
+            console.warn("La API ha fallado. Se utilizara la cache anterior.", error);
 
             return cacheValida.heroes;
         }

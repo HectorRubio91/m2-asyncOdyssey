@@ -54,7 +54,11 @@ const HEROES_DC = [
 
 export function prepararHeroes(datos) {
 
-    const heroesPorId = new Map(datos.map(hero=> [hero.id, hero]));
+    const heroesPorId = new Map(
+        datos
+            .filter(hero => hero && Number.isFinite(hero.id))
+            .map(hero=> [hero.id, hero])
+    );
 
     return HEROES_DC
         .map((personaje, indice) => {
@@ -64,6 +68,9 @@ export function prepararHeroes(datos) {
             if (!hero) {
                 return null;
             }
+
+            const apariencia = hero.appearance || {};
+            const biografia = hero.biography || {};
 
             return {
 
@@ -79,13 +86,11 @@ export function prepararHeroes(datos) {
 
                 tipo: personaje.tipo,
 
-                altura: hero.appearance?.height?.[1] || "Desconocida",
+                altura: apariencia.height?.[1] || "Desconocida",
 
-                peso: hero.appearance?.weight?.[1] || "Desconocido",
+                peso: apariencia.weight?.[1] || "Desconocido",
 
-                historia:
-                    hero.biography?.fullName ||
-                    "Sin información",
+                nombreReal: biografia.fullName || "Sin informacion", 
 
                 poder: calcularPoder(hero)
 
@@ -97,7 +102,11 @@ export function prepararHeroes(datos) {
 
 function calcularPoder(hero) {
 
-    const estadisticas = hero.powerstats || {};
+    const estadisticas = 
+        hero?.powerstats &&
+        typeof hero.powerstats === "object" 
+            ? hero.powerstats
+            : {};
 
     const valores = Object.values(estadisticas)
         .map(valor => Number(valor) || 0);
@@ -127,14 +136,14 @@ export function filtrarHeroes(
     tipo
 ) {
 
+    const texto = busqueda.toLowerCase();
+
     return heroes.filter(hero => {
 
         const coincideNombre =
             hero.nombre
                 .toLowerCase()
-                .includes(
-                    busqueda.toLowerCase()
-                );
+                .includes(texto);
 
         const coincideTipo =
             tipo === "todos" ||
@@ -207,20 +216,26 @@ export function calcularResumen(heroes) {
 
     const tipos = heroes.reduce(
         (resultado, hero) => {
+            
+            if(hero.tipo){
 
-            resultado[hero.tipo] =
-                (resultado[hero.tipo] || 0) + 1;
+                resultado[hero.tipo] =
+                    (resultado[hero.tipo] || 0) + 1;
+            }
 
             return resultado;
         },
         {}
     );
 
-    const tipoDominante =
+    const tiposOrdenados =
         Object.entries(tipos)
-            .sort(
-                (a, b) => b[1] - a[1]
-            )[0][0];
+            .sort((a, b) => b[1] - a[1]);
+
+    const tipoDominante =
+        tiposOrdenados.length > 0
+            ? tiposOrdenados[0][0]
+            : "-";
 
     return {
         media: suma / heroes.length,

@@ -29,9 +29,33 @@ const error =
 const vacio =
     document.getElementById("estado-vacio");
 
+const mensajeError =
+    document.getElementById("mensaje-error");
+
+const botonReintentar =
+    document.getElementById("boton-reintentar");
+
+const contadorResultados =
+    document.getElementById("contador-resultados");
+
 
 let heroes = [];
 
+function crearElemento(etiqueta, clase, texto) {
+
+    const elemento =
+        document.createElement(etiqueta);
+
+    if (clase) {
+        elemento.className = clase;
+    }
+
+    if (texto !== undefined) {
+        elemento.textContent = texto;
+    }
+
+    return elemento;
+}
 
 async function iniciar() {
 
@@ -44,6 +68,7 @@ async function iniciar() {
         const datos = await obtenerHeroes();
 
         if (!Array.isArray(datos)) {
+
             throw new Error(
                 "Los datos recibidos no tienen un formato válido."
             );
@@ -58,10 +83,9 @@ async function iniciar() {
 
         error.classList.remove("oculto");
 
-        document.getElementById(
-            "mensaje-error"
-        ).textContent =
-            e.message || "No se han podido cargar los héroes.";
+        mensajeError.textContent =
+            e.message ||
+            "No se han podido cargar los héroes.";
 
     } finally {
 
@@ -69,35 +93,35 @@ async function iniciar() {
     }
 }
 
-
 function cargarTipos() {
 
-    filtroTipo.innerHTML = `
-        <option value="todos">
-            Todos
-        </option>
-    `;
+    filtroTipo.replaceChildren();
+
+    const opcionTodos =
+        crearElemento("option", "", "Todos");
+
+    opcionTodos.value = "todos";
+
+    filtroTipo.appendChild(opcionTodos);
 
     const tipos = heroes
         .map(hero => hero.tipo)
         .filter(
-            (tipo, index, array) =>
-                array.indexOf(tipo) === index
+            (tipo, indice, array) =>
+                tipo !== "" &&
+                array.indexOf(tipo) === indice
         );
 
     tipos.forEach(tipo => {
 
         const opcion =
-            document.createElement("option");
+            crearElemento("option", "", tipo);
 
         opcion.value = tipo;
-
-        opcion.textContent = tipo;
 
         filtroTipo.appendChild(opcion);
     });
 }
-
 
 function mostrarHeroes() {
 
@@ -112,92 +136,182 @@ function mostrarHeroes() {
         orden.value
     );
 
-    grid.innerHTML = "";
+    grid.replaceChildren();
 
     resultado.forEach(hero => {
 
         const tarjeta =
-            document.createElement("article");
+            crearElemento(
+                "article",
+                "tarjeta-heroe"
+            );
 
-        tarjeta.className =
-            "tarjeta-heroe";
+        const contenedorImagen =
+            crearElemento(
+                "div",
+                "tarjeta-imagen"
+            );
 
-        tarjeta.innerHTML = `
-            <div class="tarjeta-imagen">
+        if (hero.imagen) {
 
-                <img
-                    src="${hero.imagen}"
-                    alt="${hero.nombre}"
-                >
+            const imagen =
+                document.createElement("img");
 
-            </div>
+            imagen.src = hero.imagen;
+            imagen.alt = hero.nombre;
 
-            <div class="tarjeta-contenido">
+            imagen.onerror = () => {
 
-                <h3 class="tarjeta-nombre">
-                    ${hero.nombre}
-                </h3>
+                const alternativa =
+                    crearElemento(
+                        "div",
+                        "imagen-no-disponible",
+                        "Imagen no disponible"
+                    );
 
-                <div class="nivel-poder">
-                    Poder: ${hero.poder}/10
-                </div>
+                contenedorImagen.replaceChildren(
+                    alternativa
+                );
+            };
 
-                <span class="tarjeta-tipo">
-                    ${hero.tipo}
-                </span>
+            contenedorImagen.appendChild(imagen);
 
-                <div class="tarjeta-datos">
+        } else {
 
-                    <div class="dato">
+            contenedorImagen.appendChild(
+                crearElemento(
+                    "div",
+                    "imagen-no-disponible",
+                    "Imagen no disponible"
+                )
+            );
+        }
 
-                        <span class="dato-etiqueta">
-                            Altura
-                        </span>
+        tarjeta.appendChild(contenedorImagen);
 
-                        <span class="dato-valor">
-                            ${hero.altura}
-                        </span>
+        const contenido =
+            crearElemento(
+                "div",
+                "tarjeta-contenido"
+            );
 
-                    </div>
+        contenido.appendChild(
+            crearElemento(
+                "h3",
+                "tarjeta-nombre",
+                hero.nombre
+            )
+        );
 
-                    <div class="dato">
+        contenido.appendChild(
+            crearElemento(
+                "div",
+                "nivel-poder",
+                `Poder: ${hero.poder}/10`
+            )
+        );
 
-                        <span class="dato-etiqueta">
-                            Peso
-                        </span>
+        contenido.appendChild(
+            crearElemento(
+                "span",
+                "tarjeta-tipo",
+                hero.tipo || "Tipo desconocido"
+            )
+        );
 
-                        <span class="dato-valor">
-                            ${hero.peso}
-                        </span>
+        const datos =
+            crearElemento(
+                "div",
+                "tarjeta-datos"
+            );
 
-                    </div>
+        const datoAltura =
+            crearElemento("div", "dato");
 
-                </div>
+        datoAltura.appendChild(
+            crearElemento(
+                "span",
+                "dato-etiqueta",
+                "Altura"
+            )
+        );
 
-                <div class="tarjeta-poderes">
+        datoAltura.appendChild(
+            crearElemento(
+                "span",
+                "dato-valor",
+                hero.altura
+            )
+        );
 
-                    <span class="tarjeta-poderes-titulo">
-                        Estadísticas
-                    </span>
+        const datoPeso =
+            crearElemento("div", "dato");
 
-                    <ul class="lista-poderes">
+        datoPeso.appendChild(
+            crearElemento(
+                "span",
+                "dato-etiqueta",
+                "Peso"
+            )
+        );
 
-                        ${hero.poderes
-                            .map(poder =>
-                                `<li>${poder}</li>`
-                            )
-                            .join("")}
+        datoPeso.appendChild(
+            crearElemento(
+                "span",
+                "dato-valor",
+                hero.peso
+            )
+        );
 
-                    </ul>
+        datos.append(datoAltura, datoPeso);
 
-                </div>
+        contenido.appendChild(datos);
 
-                <p class="tarjeta-historia">
-                    ${hero.historia}
-                </p>
 
-            </div>
-        `;
+        
+        const seccionPoderes =
+            crearElemento(
+                "div",
+                "tarjeta-poderes"
+            );
+
+        seccionPoderes.appendChild(
+            crearElemento(
+                "span",
+                "tarjeta-poderes-titulo",
+                "Estadísticas"
+            )
+        );
+
+        const listaPoderes =
+            crearElemento(
+                "ul",
+                "lista-poderes"
+            );
+
+        hero.poderes.forEach(poder => {
+
+            listaPoderes.appendChild(
+                crearElemento("li", "", poder)
+            );
+        });
+
+        seccionPoderes.appendChild(listaPoderes);
+
+        contenido.appendChild(seccionPoderes);
+
+
+        
+        const nombreReal =
+            crearElemento(
+                "p",
+                "tarjeta-historia",
+                `Nombre real: ${hero.nombreReal}`
+            );
+
+        contenido.appendChild(nombreReal);
+
+        tarjeta.appendChild(contenido);
 
         grid.appendChild(tarjeta);
     });
@@ -205,33 +319,24 @@ function mostrarHeroes() {
 
     actualizarResumen(resultado);
 
-
-    document.getElementById(
-        "contador-resultados"
-    ).textContent =
+    contadorResultados.textContent =
         `${resultado.length} resultados`;
 
-
-    if (resultado.length === 0) {
-
-        vacio.classList.remove("oculto");
-
-    } else {
-
-        vacio.classList.add("oculto");
-    }
+    vacio.classList.toggle(
+        "oculto",
+        resultado.length !== 0
+    );
 }
 
-
-function actualizarResumen(heroes) {
+function actualizarResumen(heroesFiltrados) {
 
     const resumen =
-        calcularResumen(heroes);
+        calcularResumen(heroesFiltrados);
 
     document.getElementById(
         "total-heroes"
     ).textContent =
-        heroes.length;
+        heroesFiltrados.length;
 
     document.getElementById(
         "poder-medio"
@@ -250,30 +355,27 @@ function actualizarResumen(heroes) {
 }
 
 
+
 buscador.addEventListener(
     "input",
     mostrarHeroes
 );
-
 
 filtroTipo.addEventListener(
     "change",
     mostrarHeroes
 );
 
-
 orden.addEventListener(
     "change",
     mostrarHeroes
 );
 
-
-document.getElementById(
-    "boton-reintentar"
-).addEventListener(
+botonReintentar.addEventListener(
     "click",
     iniciar
 );
+
 
 
 iniciar();
