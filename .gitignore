@@ -4,6 +4,7 @@ node_modules/
 # Archivos generados por Vite
 dist/
 dist-ssr/
+build/
 
 # Archivos de entorno con posibles datos privados
 .env
