@@ -36,30 +36,36 @@ let heroes = [];
 async function iniciar() {
 
     cargando.classList.remove("oculto");
-
     error.classList.add("oculto");
+    vacio.classList.add("oculto");
 
     try {
 
         const datos = await obtenerHeroes();
 
+        if (!Array.isArray(datos)) {
+            throw new Error(
+                "Los datos recibidos no tienen un formato válido."
+            );
+        }
+
         heroes = prepararHeroes(datos);
 
         cargarTipos();
-
         mostrarHeroes();
 
-        cargando.classList.add("oculto");
-
     } catch (e) {
-
-        cargando.classList.add("oculto");
 
         error.classList.remove("oculto");
 
         document.getElementById(
             "mensaje-error"
-        ).textContent = e.message;
+        ).textContent =
+            e.message || "No se han podido cargar los héroes.";
+
+    } finally {
+
+        cargando.classList.add("oculto");
     }
 }
 

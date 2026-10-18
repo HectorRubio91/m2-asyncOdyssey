@@ -97,10 +97,16 @@ export function prepararHeroes(datos) {
 
 function calcularPoder(hero) {
 
-    const stats = Object.values(hero.powerstats)
+    const estadisticas = hero.powerstats || {};
+
+    const valores = Object.values(estadisticas)
         .map(valor => Number(valor) || 0);
 
-    const total = stats.reduce(
+    if (valores.length === 0) {
+        return 1;
+    }
+
+    const total = valores.reduce(
         (suma, valor) => suma + valor,
         0
     );
